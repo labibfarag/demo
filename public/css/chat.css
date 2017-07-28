@@ -1,0 +1,86 @@
+
+
+.chat_box {
+    display:inline-block;
+    width:500px;
+    margin-left: 0px;
+	height : 700px;
+}
+.main_chat2{
+    display:none;
+}
+.user_box {
+    display:block;
+    bottom:0;
+    background: #5ba0d0 none repeat scroll 0 0;
+    color: #FFF;
+    padding: 10px;
+    cursor: pointer;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.user_box:hover {
+    cursor:pointer;
+}
+.left {
+    float:left;
+}
+.right {
+    float:right;
+}
+.clear {
+    clear:both;
+}
+.message_post {
+    border-top:1px solid #EFEFEF;
+    display:block;
+    padding:5px 3px;
+}
+.message_text {
+    margin-left:5px;
+}
+.message_content {
+    border:1px solid #ddd;
+    height:700px;
+    /*overflow-y:scroll;*/
+    text-align:left;
+}
+.box_reply {
+    border:1px solid #ddd;
+}
+.text_reply {
+    display:block;
+    width:99%;
+}
+.user_img {
+}
+.hide_wrap_box {
+    height:22px;
+    bottom:0;
+}
+.name {
+    display: block;
+    width: 80%;
+    font-weight:bold;
+    font-family: arial;
+}
+.index_reload {
+    border: 0px solid #ddd;
+    position: fixed;
+    bottom: 1px;
+    right: 1px;
+    width: 100%;
+}
+#chat_area {
+    float:right;
+	background :azure;
+}
+.buttonClass 
+{
+	background: royalblue;
+    width: 115px;
+    height: 75px;
+    border-radius: 15px;
+}
