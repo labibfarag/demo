@@ -117,7 +117,7 @@ var ConversationPanel = (function() {
   function displayMessage(newPayload, typeValue) {
     var isUser = isUserMessage(typeValue);
 	
-	var stopOther=true;
+     	var stopOther=true;
 		if(!isUser)
 	{
 		var reply=newPayload.output.text[0];
@@ -127,27 +127,8 @@ var ConversationPanel = (function() {
 		
 		var res = reply.substring(3,reply.length )
 		
-		var list=res.split(',');
-		 var container=document.getElementById('checkList');
-		for(var x=0;x<list.length;x++){
-    
-
-	 var checkbox = document.createElement('input');
-checkbox.type = "checkbox";
-checkbox.name = "name";
-checkbox.value = "value";
-checkbox.id = "id";
-
-var label = document.createElement('label')
-label.htmlFor = "id";
-label.appendChild(document.createTextNode(list[x]));
-
-container.appendChild(checkbox);
-container.appendChild(label);
-var mybr = document.createElement('br');
-container.appendChild(mybr);
-
-		}
+		var list = ["Value 1", "Value 2", "Value 3" , "Value 4"];
+	    displayList(list);
 		}
 	}
 	
@@ -232,6 +213,35 @@ container.appendChild(mybr);
     return messageArray;
   }
 
+  
+  // function to display list of check boxes 
+  function displayList(list)
+  {
+	  	 var container=document.getElementById('checkList');
+		for(var x=0;x<list.length;x++){
+    
+
+	 var checkbox = document.createElement('input');
+checkbox.type = "checkbox";
+checkbox.name = list[x];
+checkbox.value = list[x];
+checkbox.id = "id_"+list[x];
+
+var label = document.createElement('label')
+label.htmlFor = "id_"+list[x];
+label.appendChild(document.createTextNode(list[x]));
+
+container.appendChild(checkbox);
+container.appendChild(label);
+var mybr = document.createElement('br');
+container.appendChild(mybr);
+
+		}
+  }
+  
+  
+  
+  
   // Scroll to the bottom of the chat window (to the most recent messages)
   // Note: this method will bring the most recent user message into view,
   //   even if the most recent message is from Watson.
