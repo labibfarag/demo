@@ -128,6 +128,7 @@ var ConversationPanel = (function() {
 		var res = reply.substring(3,reply.length )
 		
 		var list = ["Value 1", "Value 2", "Value 3" , "Value 4"];
+		clearList();
 	    displayList(list);
 		}
 	}
@@ -213,6 +214,11 @@ var ConversationPanel = (function() {
     return messageArray;
   }
 
+  //clear all list 
+  function clearList()
+  {
+	  $("#checkList").empty();
+  }
   
   // function to display list of check boxes 
   function displayList(list)
@@ -223,7 +229,7 @@ var ConversationPanel = (function() {
 
 	 var checkbox = document.createElement('input');
 checkbox.type = "checkbox";
-checkbox.name = list[x];
+checkbox.name = "wishList";
 checkbox.value = list[x];
 checkbox.id = "id_"+list[x];
 

@@ -277,7 +277,7 @@ input:-moz-placeholder {
 #input-wrapper {
     padding: 1.25rem;
    
-    position: relative;
+    position: fixed;
 }
 #input-mic-holder {
     height: 3rem;
