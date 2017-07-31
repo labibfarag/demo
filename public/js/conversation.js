@@ -3,6 +3,44 @@
 /* eslint no-unused-vars: "off" */
 /* global Api: true, Common: true*/
 
+//Wait function
+function wait(ms){
+   var start = new Date().getTime();
+   var end = start;
+   while(end < start + ms) {
+     end = new Date().getTime();
+  }
+}
+
+//Data processing
+var fake_rec_list = ["Dasani 24 pk purified water", "Chips Ahoy Chewey family size", "White Rice Basmati", "Sysco Whole Chicken Skinned", "Broccoli", "24 pack Cheddar Sandwich Slices", "24 OZ Tropicana Orange Juice", "Lays Family Size Potato Chips"];
+
+function proc(context){
+    context.action = "result_list";
+    context.s_list = fake_rec_list;
+    return context;
+}
+
+var fake_evidence_list = ["White Rice", "Chicken", "Broccoli"];
+var fake_recipe_list = ["Casserole (American)", "Chicken Biryani (Indian)", "Chicken with Broccoli (Chinese)"];
+function infer(context){
+    context.action = "infer_success";
+    context.e_list = fake_evidence_list;
+    context.r_list = fake_recipe_list;
+    return context;
+}
+
+var fake_missing_dict = {"casserole" : ["Mozzarella Cheese", "Butter", "Baking Powder"]};
+function find_recipe_missing(context){
+    var recipe = context.recipe;
+    context.action = "miss_reci_found";
+    context.rec_missing_list = fake_missing_dict[recipe];
+    console.log("Chosen recipe: " + recipe);
+    return context;
+}
+
+
+
 var ConversationPanel = (function() {
   var settings = {
     selectors: {
@@ -27,7 +65,7 @@ var ConversationPanel = (function() {
   // Initialize the module
   function init() {
     chatUpdateSetup();
-    Api.sendRequest('', null );
+    //Api.sendRequest('', null );
     setupInputBox();
   }
   // Set up callbacks on payload setters in Api module
@@ -42,7 +80,42 @@ var ConversationPanel = (function() {
     var currentResponsePayloadSetter = Api.setResponsePayload;
     Api.setResponsePayload = function(newPayloadStr) {
       currentResponsePayloadSetter.call(Api, newPayloadStr);
+      var json_msg = JSON.parse(newPayloadStr);
+      console.log("check bw: " + json_msg.context.before_wait);
+      console.log("check wait: " + json_msg.context.wait);
+      if(json_msg.context.before_wait === 'true'){
+          console.log(" before wait");
+          wait(4000);
+      }
       displayMessage(JSON.parse(newPayloadStr), settings.authorTypes.watson);
+      if(json_msg.context.wait === 'true'){
+          console.log("wait");
+          wait(4000);
+      }        
+      if (json_msg.context.action === 'prepare_list') {
+            var new_msg = "processing";
+            console.log("Start processing");
+            json_msg.context = proc(json_msg.context);
+            Api.sendRequest(null, json_msg.context);
+      }
+      else if(json_msg.context.action === 'infer_list'){
+          var new_msg = "Inferring";
+          clearList();
+          displayList(json_msg.context.s_list);
+          json_msg.context = infer(json_msg.context);
+          Api.sendRequest(null, json_msg.context);
+      }
+      else if(json_msg.context.action === 'chosen_recipe'){
+          var new_msg = "Find missing";
+          console.log("Find missing");
+          json_msg.context = find_recipe_missing(json_msg.context);
+          Api.sendRequest(null, json_msg.context);
+      }
+      else if(json_msg.context.action === 'form_new_list'){
+          clearList();
+          var new_list = json_msg.context.s_list.concat(json_msg.context.rec_missing_list);
+          displayList(new_list);
+      }
     };
   }
 
@@ -128,7 +201,6 @@ var ConversationPanel = (function() {
 		var res = reply.substring(3,reply.length )
 		
 		var list = ["Value 1", "Value 2", "Value 3" , "Value 4"];
-		clearList();
 	    displayList(list);
 		}
 	}
@@ -214,38 +286,36 @@ var ConversationPanel = (function() {
     return messageArray;
   }
 
-  //clear all list 
-  function clearList()
-  {
-	  $("#checkList").empty();
-  }
   
   // function to display list of check boxes 
   function displayList(list)
   {
 	  	 var container=document.getElementById('checkList');
 		for(var x=0;x<list.length;x++){
-    
+            var checkbox = document.createElement('input');
+            checkbox.type = "checkbox";
+            checkbox.name = "wishList";
+            checkbox.value = list[x];
+            checkbox.id = "id_"+list[x];
 
-	 var checkbox = document.createElement('input');
-checkbox.type = "checkbox";
-checkbox.name = "wishList";
-checkbox.value = list[x];
-checkbox.id = "id_"+list[x];
+            var label = document.createElement('label')
+            label.htmlFor = "id_"+list[x];
+            label.appendChild(document.createTextNode(list[x]));
 
-var label = document.createElement('label')
-label.htmlFor = "id_"+list[x];
-label.appendChild(document.createTextNode(list[x]));
-
-container.appendChild(checkbox);
-container.appendChild(label);
-var mybr = document.createElement('br');
-container.appendChild(mybr);
+            container.appendChild(checkbox);
+            container.appendChild(label);
+            var mybr = document.createElement('br');
+            container.appendChild(mybr);
 
 		}
   }
   
   
+  //Function to clear list
+  function clearList()
+   {
+      $("#checkList").empty();
+   }
   
   
   // Scroll to the bottom of the chat window (to the most recent messages)

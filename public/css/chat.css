@@ -2,9 +2,9 @@
 
 .chat_box {
     display:inline-block;
-    width:500px;
+    width:600px;
     margin-left: 0px;
-	height : 780px;
+	height : 820px;
 }
 .main_chat2{
     display:none;
