@@ -1,14 +1,14 @@
 applications:
-- name: shop_test_example
+- name: chat-design-list
   command: npm start
   path: .
   memory: 256M
   instances: 1
   services:
-  - Conversation-3t
-  - Speech_to_Text-n1
-  - Text_to_Speech-me
+  - Conversation-7v
+  - Speech-to-Text-7v-demo
+  - Text-to-Speech-demo
   env:
     NPM_CONFIG_PRODUCTION: false
-    WORKSPACE_ID: 700dcbc5-8ad7-41ee-8ab8-0c8aa17fbe6e 
+    WORKSPACE_ID: db9ec8c5-e845-4f48-bf9d-9f6c83a8b4d1 
 ## My App URL is https://conversation-simple-labib-farag-2017jun17.mybluemix.net/
