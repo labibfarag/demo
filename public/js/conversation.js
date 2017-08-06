@@ -83,7 +83,7 @@ var ConversationPanel = (function() {
       var json_msg = JSON.parse(newPayloadStr);
       console.log("check bw: " + json_msg.context.before_wait);
       console.log("check wait: " + json_msg.context.wait);
-      if(json_msg.context.before_wait === 'true'){
+      if(json_msg.context.before_wait === true){
           console.log(" before wait");
           wait(4000);
       }
@@ -190,24 +190,7 @@ var ConversationPanel = (function() {
   function displayMessage(newPayload, typeValue) {
     var isUser = isUserMessage(typeValue);
 	
-     	var stopOther=true;
-		if(!isUser)
-	{
-		var reply=newPayload.output.text[0];
-		
-		if(reply.indexOf('%%%') >= 0) {
-		stopOther=false;	
-		
-		var res = reply.substring(3,reply.length )
-		
-		var list = ["Value 1", "Value 2", "Value 3" , "Value 4"];
-	    displayList(list);
-		}
-	}
 	
-
-	
-	if(stopOther){
     var textExists = (newPayload.input && newPayload.input.text)
       || (newPayload.output && newPayload.output.text);
     if (isUser !== null && textExists) {
@@ -232,7 +215,7 @@ var ConversationPanel = (function() {
       // Move chat to the most recent messages when new messages are added
       scrollToChatBottom();
     }
-	}
+	
   }
 
   // Checks if the given typeValue matches with the user "name", the Watson "name", or neither

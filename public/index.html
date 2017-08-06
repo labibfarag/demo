@@ -159,6 +159,23 @@ $("#firstButton").click(function(e) {
 
 
 
+var midWeekList=['Sarah Lee Honey Wheet Bread','Organic Origin Farms Brown Eggs','Farmstand .5 G Orange Juice','Oberweis 1G Whole Milf'];
+
+$("#secondButton").click(function(e) {
+    e.preventDefault();
+	      $("#checkList").empty();
+
+			     var container = $('#checkList');
+   var inputs = container.find('input');
+   for(var i=0;i<midWeekList.length;i++){
+   var id = inputs.length+1;
+
+   $('<input />', { type: 'checkbox', id: 'cb'+id, value: midWeekList[i] }).appendTo(container);
+   $('<label />', { 'for': 'cb'+id, text: midWeekList[i] }).appendTo(container).after("<br />");;
+   
+}
+	
+});
 
 
 </script>

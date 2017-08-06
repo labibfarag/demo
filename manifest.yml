@@ -10,5 +10,5 @@ applications:
   - Text-to-Speech-demo
   env:
     NPM_CONFIG_PRODUCTION: false
-    WORKSPACE_ID: db9ec8c5-e845-4f48-bf9d-9f6c83a8b4d1 
+    WORKSPACE_ID: 8ea752d3-e82c-4e54-9c4e-5060a903d822 
 ## My App URL is https://conversation-simple-labib-farag-2017jun17.mybluemix.net/
